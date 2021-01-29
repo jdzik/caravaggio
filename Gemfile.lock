@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    caravaggio (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  caravaggio!
+
+BUNDLED WITH
+   1.17.3
