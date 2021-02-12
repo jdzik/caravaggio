@@ -1,0 +1,33 @@
+REQUIRED FOR LAUNCH
+
+Add association links
+
+Only display chosen classes
+
+Allow expansion of class list as an option
+
+Order classes on page intelligently
+
+Expand classes/links when clicked on
+
+Push to a Gem repository
+
+Update Glaze/Joinery with the deployed Gem
+
+
+NICE TO HAVE
+
+Show list of subclasses based on class modules.
+
+Allow expansion of a module full of models.
+
+Have arrow types indicate link types
+
+Style it
+
+Test with something other than Glaze/Joinery
+
+Write tests
+
+Take it public
+

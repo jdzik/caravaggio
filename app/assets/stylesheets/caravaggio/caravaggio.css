@@ -1,0 +1,18 @@
+div#sidebar {
+  width: 15%;
+  float: left;
+  padding: 10px;
+  height:100vh;
+  min-height:100vh;
+  overflow: scroll;
+}
+
+div #canvas {
+  width: auto;
+  float: left;
+  padding: 10px;
+  border: 2px solid red;
+  height:100vh;
+  min-height:100vh;
+  overflow: scroll;
+}

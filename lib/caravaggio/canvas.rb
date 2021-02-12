@@ -4,11 +4,15 @@ require "caravaggio/figure"
 module Caravaggio
   class Canvas
     def initialize
-      @figures = ActiveRecord::Base.descendants.map{|model| Figure.new(model)}
+      @figures = ActiveRecord::Base.descendants.sort{|s1, s2| s1.name <=> s2.name}.map{|model| Figure.new(model)}
     end
     
-    def to_json
-      @figures.map{|figure| figure.to_h}.to_json
+    def models
+      @figures.map{|figure| figure.model}
+    end
+    
+    def associations
+      @figures.map{|figure| figure.associations}.flatten
     end
   end
 end

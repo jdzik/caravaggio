@@ -5,7 +5,9 @@ module Caravaggio
     protect_from_forgery with: :exception
     
     def index
-      @canvas = Canvas.new.to_json
+      @canvas = Canvas.new
+      @models = @canvas.models
+      @associations = @canvas.associations
     end
   end
 end

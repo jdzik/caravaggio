@@ -11,4 +11,4 @@
 // about supported directives.
 //
 //= require_tree .
-//= require d3.min.js
+//= require d3/d3.min.js
