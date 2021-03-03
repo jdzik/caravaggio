@@ -27,11 +27,11 @@ module Caravaggio
     
     def model
       @model_hash ||= {
-        name: name,
+        id: name,
         friendly_name: friendly_name,
         short_name: short_name,
         columns: @model.column_names.sort,
-        to: to_models
+        associated_classes: associations.map{|association| association[:target]}
       }
     end
     
@@ -55,11 +55,10 @@ module Caravaggio
       association.options.each do |k, v|
         options[k.to_s] = v.to_s
       end
-      class_name = options["class_name"] || association.name.to_s.singularize.camelize
-      options.delete "class_name"
+      
       {
-        from: name,
-        to: clean_name(class_name),
+        source: name,
+        target: to_class_name(association),
         name: association.macro == :belongs_to || association.macro == :has_one ? association.name : association.plural_name,
         options: options,
         association_type: association_type
@@ -80,6 +79,15 @@ module Caravaggio
           from_figures[:from].sort!
         end
       end
+    end
+    
+    def to_class_name(association)
+      class_name = association.options[:class_name] || association.name.to_s.singularize.camelize
+      begin
+        class_name = association.klass.name
+      rescue => e
+      end
+      clean_name(class_name)
     end
   end
 end

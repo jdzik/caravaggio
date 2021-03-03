@@ -1,14 +1,16 @@
 REQUIRED FOR LAUNCH
 
-Add association links
-
-Only display chosen classes
-
-Allow expansion of class list as an option
-
-Order classes on page intelligently
-
 Expand classes/links when clicked on
+
+Center on selected classes
+
+Arrowheads on lines
+
+Hover over line, get data
+
+Color-code based on association type
+
+Click-expand on object
 
 Push to a Gem repository
 
@@ -28,6 +30,8 @@ Style it
 Test with something other than Glaze/Joinery
 
 Write tests
+
+Figure out what to do with polymorphic associations
 
 Take it public
 

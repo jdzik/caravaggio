@@ -4,6 +4,7 @@ require "caravaggio/figure"
 module Caravaggio
   class Canvas
     def initialize
+      Rails.application.eager_load!
       @figures = ActiveRecord::Base.descendants.sort{|s1, s2| s1.name <=> s2.name}.map{|model| Figure.new(model)}
     end
     

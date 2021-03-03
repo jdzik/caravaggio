@@ -8,12 +8,13 @@
 <div id="container">
   <div id="sidebar">
     <ul>
+      <li><%= check_box_tag "ALL", "ALL", true, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
       <% @models.each do |model| %>
-        <li><%= check_box_tag model[:friendly_name], model[:friendly_name] %> <%= model[:short_name] %></li>
+        <li><%= check_box_tag model[:friendly_name], model[:friendly_name], true, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
       <% end %>
     </ul>
   </div>
   <div id="canvas">
-    <svg id="model-diagram" width="1000" height="2000" />
+    <svg id="model-diagram" width="1000" height="1000" />
   </div>
 </div>
