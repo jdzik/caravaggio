@@ -8,6 +8,10 @@
 <div id="container">
   <div id="sidebar">
     <ul>
+      <li><span class="belongs_to">Belongs To</span></li>
+      <li><span class="has_many">Has Many</span></li>
+      <li><span class="has_one">Has One</span></li>
+      <li><span class="has_and_belongs_to_many">HABTM</span></li>
       <li><%= check_box_tag "ALL", "ALL", true, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
       <% @models.each do |model| %>
         <li><%= check_box_tag model[:friendly_name], model[:friendly_name], true, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>

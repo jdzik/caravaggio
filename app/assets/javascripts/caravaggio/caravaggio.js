@@ -11,6 +11,20 @@ function displayModels() {
   d3.select("svg").remove();  
   var svg = d3.select('#canvas').append("svg").attr("width", 1000).attr("height", 1000)
   
+  var defs = svg.append('svg:defs')
+
+  var marker = defs.append("marker")
+    .attr('id', 'arrowhead')
+    .attr('markerHeight', 15)
+    .attr('markerWidth', 15)
+    .attr('orient', 'auto-start-reverse')
+    .attr('refX', 15)
+    .attr('refY',8)
+    .attr('viewBox', '0 0 15 15')
+    .append('svg:path')
+    .attr('d', 'M 0 0 L 15 8 L 0 15 z')
+    .attr('class', function(d,i) { i.association_type});
+  
   // apply forces
   var linkForce = d3.forceLink();
   var selectedModels = displayedModels();
@@ -18,8 +32,9 @@ function displayModels() {
   var targetModels = expandModels(selectedModels);
   
   var simulation = d3.forceSimulation()
-    .force("charge", d3.forceManyBody())
+    .force("charge", d3.forceManyBody().strength(-20))
     .force("center", d3.forceCenter().x(500).y(500))
+    .force("centerSelected", isolate(d3.forceCenter().x(500).y(500), function(d) { return d.checked }))
     .force("link", linkForce)
     .nodes(targetModels)
     .on("tick", updateNetwork);
@@ -33,9 +48,8 @@ function displayModels() {
     .data(associationLinks, d => `${d.source}-${d.target}`)
     .enter()
     .append("line")
-    .attr("class", "association")
-    .style("stroke", "black")
-    .style("opacity", 0.5);
+    .attr("class", d => "association " + d.association_type)
+    .attr("marker-end", "url(#arrowhead)");
   
   // add labelled circles for all models
   var modelDisplay = svg
@@ -45,12 +59,26 @@ function displayModels() {
     .append("g")
     .attr("class", "model");
   modelDisplay.append("circle")
-    .attr("r", 5)
-    .style("fill", "red");
+    .attr("r", d => d.checked ? 8 : 5)
+    .attr("onclick", d => "clickCircle('" + d.id + "')")
+    .style("fill", d => d.checked ? "red" : "blue");
   modelDisplay.append("text")
     .style("text-anchor", "middle")
     .attr("y", 15)
     .text(d => d["short_name"])
+}
+
+function isolate(force, filter) {
+  var initialize = force.initialize;
+  force.initialize = function() { initialize.call(force, models.filter(filter)); };
+  return force;
+}
+
+function clickCircle(modelId) {
+  model = findModel(modelId);
+  model.checked = !model.checked;
+  d3.select("input#" + model.friendly_name).property('checked', model.checked);
+  displayModels();
 }
 
 function updateNetwork() {

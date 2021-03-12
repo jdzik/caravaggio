@@ -1,11 +1,5 @@
 REQUIRED FOR LAUNCH
 
-Expand classes/links when clicked on
-
-Center on selected classes
-
-Arrowheads on lines
-
 Hover over line, get data
 
 Color-code based on association type
@@ -16,14 +10,19 @@ Push to a Gem repository
 
 Update Glaze/Joinery with the deployed Gem
 
+Optionally display links to/from a class
+
 
 NICE TO HAVE
+
+Drag nodes around and re-calculate
+
+Allow user to annotate classes, associations, said annotations to be kept 
+around and made visible elsewhere.
 
 Show list of subclasses based on class modules.
 
 Allow expansion of a module full of models.
-
-Have arrow types indicate link types
 
 Style it
 

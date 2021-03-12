@@ -16,3 +16,27 @@ div #canvas {
   min-height:100vh;
   overflow: scroll;
 }
+
+.belongs_to {
+  stroke: red;
+  color: red;
+  fill: red;
+}
+
+.has_many {
+  stroke: green;
+  color: green;
+  fill: green;
+}
+
+.has_one {
+  stroke: blue;
+  color: blue;
+  fill: blue;
+}
+
+.has_and_belongs_to_many {
+  stroke: orange;
+  color: orange;
+  fill: orange;
+}
