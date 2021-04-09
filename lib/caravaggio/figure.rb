@@ -1,12 +1,16 @@
 # a Figure is a representation of a model.  (Get it?)
 module Caravaggio
   class Figure
-    def initialize(model)
-      @model = model
+    def initialize(source_model)
+      @source_model = source_model
     end
     
     def name
-      @name ||= clean_name(@model.name)
+      @name ||= clean_name(@source_model.name)
+    end
+    
+    def columns
+      @columns ||= @source_model.columns.sort{|c1, c2| c1.name <=> c2.name}
     end
     
     def friendly_name
@@ -18,7 +22,7 @@ module Caravaggio
     end
     
     def to_s
-      "Figure for #{@model.name}"
+      "Figure for #{@source_model.name}"
     end
     
     def to_json
@@ -26,20 +30,24 @@ module Caravaggio
     end
     
     def model
-      @model_hash ||= {
+      @source_model_hash ||= {
         id: name,
         friendly_name: friendly_name,
         short_name: short_name,
-        columns: @model.column_names.sort,
+        columns: @source_model.column_names.sort,
         associated_classes: associations.map{|association| association[:target]}
       }
     end
     
-    def associations
-      @associations ||= (associations_to_h(:belongs_to, @model.reflect_on_all_associations(:belongs_to)) + 
-        associations_to_h(:has_one, @model.reflect_on_all_associations(:has_one)) +
-        associations_to_h(:has_many, @model.reflect_on_all_associations(:has_many)) +
-        associations_to_h(:has_and_belongs_to_many, @model.reflect_on_all_associations(:has_and_belongs_to_many))).flatten
+    def associations(association_type = nil)
+      if association_type
+        associations.select{ |association| association[:association_type] == association_type }
+      else
+        @associations ||= (associations_to_h(:belongs_to, @source_model.reflect_on_all_associations(:belongs_to)) + 
+          associations_to_h(:has_one, @source_model.reflect_on_all_associations(:has_one)) +
+          associations_to_h(:has_many, @source_model.reflect_on_all_associations(:has_many)) +
+          associations_to_h(:has_and_belongs_to_many, @source_model.reflect_on_all_associations(:has_and_belongs_to_many))).flatten
+      end
     end
     
     def associations_to_h(association_type, associations)

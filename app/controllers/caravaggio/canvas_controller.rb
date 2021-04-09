@@ -7,6 +7,7 @@ module Caravaggio
     def index
       @canvas = Canvas.new
       @models = @canvas.models
+      @figures = @canvas.figures
       @associations = @canvas.associations
     end
   end

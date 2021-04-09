@@ -1,0 +1,24 @@
+<div class="figure hidden detailed-content" id="figure-<%= figure.friendly_name %>" >
+  <h2><%= figure.name %></h2>
+  <h3>Columns</h3>
+  <ul>
+    <% figure.columns.each do |column| %>
+      <li><%= column.name %> : <%= column.sql_type %></li>
+    <% end %>
+  </ul>
+  <h3>Associations</h3>
+  <ul>
+    <% figure.associations.each do |association| %>
+      <li>
+        <%= association[:association_type] %> <%= association[:name] %>
+        <% if association[:options].present? %>
+          <ul>
+            <% association[:options].each do |option, value| %>
+              <li><%= option %> : <%= value %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

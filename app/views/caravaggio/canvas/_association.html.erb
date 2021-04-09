@@ -1,0 +1,13 @@
+<div class="association hidden detailed-content" id="association-<%= association[:index] %>" >
+  <h2><%= association[:source] %>#<%= association[:name] %></h2>
+  
+  <ul>
+    <li><%= association[:name] %></li>
+    <li><%= association[:association_type] %></li>
+    <li>From: <%= association[:source] %></li>
+    <li>To: <%= association[:target] %></li>
+    <% association[:options].each do |option, value| %>
+      <li><%= option %> : <%= value %></li>
+    <% end %>
+  </ul>
+</div>

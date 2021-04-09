@@ -1,24 +1,45 @@
-<h1>Welcome to Caravaggio!</h1>
-
 <script>
   var models = <%= @models.to_json.html_safe %>;
   var associations = <%= @associations.to_json.html_safe %>;
 </script>
-  
+        
+<h1>Welcome to Caravaggio!</h1>
+      
 <div id="container">
-  <div id="sidebar">
+  <div class="sidebar">
+    <div class="color-key">
+      <ul>
+        <li><span class="belongs_to">Belongs To</span></li>
+        <li><span class="has_many">Has Many</span></li>
+        <li><span class="has_one">Has One</span></li>
+        <li><span class="has_and_belongs_to_many">HABTM</span></li>
+      </ul>
+    </div>
     <ul>
-      <li><span class="belongs_to">Belongs To</span></li>
-      <li><span class="has_many">Has Many</span></li>
-      <li><span class="has_one">Has One</span></li>
-      <li><span class="has_and_belongs_to_many">HABTM</span></li>
-      <li><%= check_box_tag "ALL", "ALL", true, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
+      <li><%= check_box_tag "ALL", "ALL", false, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
       <% @models.each do |model| %>
-        <li><%= check_box_tag model[:friendly_name], model[:friendly_name], true, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
+        <li><%= check_box_tag model[:friendly_name], model[:friendly_name], false, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
       <% end %>
     </ul>
   </div>
   <div id="canvas">
     <svg id="model-diagram" width="1000" height="1000" />
+  </div>
+  <div id="exhibit" class="sidebar">
+    <div class="detailed-content">
+      <h2>Instructions</h2>
+      <p>
+        Select a class from the left sidebar.
+      </p>
+      <p>
+        Click on a link or a dot to get more detail.
+      </p>
+    </div>
+    <% @figures.each do |figure| %>
+      <%= render "figure", figure: figure %>
+    <% end %>
+    <% @associations.each do |association| %>
+      <%= render "association", association: association %>
+    <% end %>
   </div>
 </div>

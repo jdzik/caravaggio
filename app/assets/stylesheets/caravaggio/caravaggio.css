@@ -1,4 +1,21 @@
-div#sidebar {
+body {
+    background-image: linear-gradient(#93a9fc, #ccc);
+}
+
+.color-key {
+  background: #fff;
+  border: 3px solid #414652;
+}
+svg {
+  background: #fff;
+}
+
+h1 {
+  text-align: center;
+  padding: 10px 0px;
+}
+
+div.sidebar {
   width: 15%;
   float: left;
   padding: 10px;
@@ -7,11 +24,18 @@ div#sidebar {
   overflow: scroll;
 }
 
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin: 4px;
+}
+
 div #canvas {
+    border: 5px solid #414652;
   width: auto;
   float: left;
-  padding: 10px;
-  border: 2px solid red;
   height:100vh;
   min-height:100vh;
   overflow: scroll;
@@ -39,4 +63,8 @@ div #canvas {
   stroke: orange;
   color: orange;
   fill: orange;
+}
+
+.hidden {
+  display: none;
 }

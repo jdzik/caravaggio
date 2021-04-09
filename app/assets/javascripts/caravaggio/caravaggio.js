@@ -1,5 +1,5 @@
 function initializeCaravaggio() {
-  setAllModelChecked(true);
+  setAllModelChecked(false);
   connectAssociations();
   displayModels();
 }
@@ -11,19 +11,12 @@ function displayModels() {
   d3.select("svg").remove();  
   var svg = d3.select('#canvas').append("svg").attr("width", 1000).attr("height", 1000)
   
-  var defs = svg.append('svg:defs')
-
-  var marker = defs.append("marker")
-    .attr('id', 'arrowhead')
-    .attr('markerHeight', 15)
-    .attr('markerWidth', 15)
-    .attr('orient', 'auto-start-reverse')
-    .attr('refX', 15)
-    .attr('refY',8)
-    .attr('viewBox', '0 0 15 15')
-    .append('svg:path')
-    .attr('d', 'M 0 0 L 15 8 L 0 15 z')
-    .attr('class', function(d,i) { i.association_type});
+  var defs = svg.append('svg:defs');
+  
+  createMarker(defs, "belongs_to", "red");
+  createMarker(defs, "has_one", "blue");
+  createMarker(defs, "has_many", "green");
+  createMarker(defs, "has_and_belongs_to_many", "orange");
   
   // apply forces
   var linkForce = d3.forceLink();
@@ -39,17 +32,14 @@ function displayModels() {
     .nodes(targetModels)
     .on("tick", updateNetwork);
   
-  if(associationLinks.length > 0) {
- //   simulation.force("link").links(associationLinks);
-  }
-  
   // add lines for all associations
   svg.selectAll("line.association")
     .data(associationLinks, d => `${d.source}-${d.target}`)
     .enter()
     .append("line")
     .attr("class", d => "association " + d.association_type)
-    .attr("marker-end", "url(#arrowhead)");
+    .attr("marker-end", d => "url(#" + d.association_type + "-arrowhead)")
+    .attr("onclick", d => "exhibitAssociation(" + d.index + ")");
   
   // add labelled circles for all models
   var modelDisplay = svg
@@ -68,6 +58,21 @@ function displayModels() {
     .text(d => d["short_name"])
 }
 
+function createMarker(defs, name, color) {
+  return defs.append("marker")
+    .attr('id', name + '-arrowhead')
+    .attr('markerHeight', 15)
+    .attr('markerWidth', 15)
+    .attr('orient', 'auto-start-reverse')
+    .attr('refX', 15)
+    .attr('refY',8)
+    .attr('viewBox', '0 0 15 15')
+    .append('svg:path')
+    .attr('d', 'M 0 0 L 15 8 L 0 15 z')
+    .attr('class', function(d,i) { i.association_type})
+    .attr("fill", color);
+}
+
 function isolate(force, filter) {
   var initialize = force.initialize;
   force.initialize = function() { initialize.call(force, models.filter(filter)); };
@@ -78,8 +83,12 @@ function clickCircle(modelId) {
   model = findModel(modelId);
   model.checked = !model.checked;
   d3.select("input#" + model.friendly_name).property('checked', model.checked);
+  if(model.checked) {
+    exhibitFigure(model);
+  }
   displayModels();
 }
+
 
 function updateNetwork() {
   d3.selectAll("line.association")
@@ -108,6 +117,22 @@ function displayedAssociations(models) {
 // For the list of models to display, find all models plus models they have associations to
 function displayedModels() {
   return models.filter(model => model.checked);
+}
+
+function exhibitFigure(model) {
+  hideExhibits();
+  d3.select("#figure-" + model.friendly_name).classed("hidden", false);
+  document.getElementById("exhibit").scrollTop = 0;
+}
+
+function exhibitAssociation(associationIndex) {
+  hideExhibits();
+  d3.select("#association-" + associationIndex).classed("hidden", false);
+  document.getElementById("exhibit").scrollTop = 0;
+}
+
+function hideExhibits() {
+  d3.selectAll("div.detailed-content").classed("hidden", true);
 }
 
 
@@ -149,6 +174,9 @@ function setAllModels(cb) {
 function setModel(cb) {
   if(!(typeof(model = findModel(cb.dataset.className)) === 'undefined')) {
     model.checked = cb.checked;
+    if(model.checked) {
+      exhibitFigure(model);
+    }
   }
 
   displayModels();
@@ -173,3 +201,4 @@ function clearModelLocations() {
     models[i].y = 500 + Math.random() * 200;
   }
 }
+
