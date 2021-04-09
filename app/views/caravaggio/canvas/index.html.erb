@@ -2,25 +2,33 @@
   var models = <%= @models.to_json.html_safe %>;
   var associations = <%= @associations.to_json.html_safe %>;
 </script>
-        
-<h1>Welcome to Caravaggio!</h1>
+
+<div id="header">
+  <h1>Welcome to Caravaggio!</h1>
+</div>
       
 <div id="container">
   <div class="sidebar">
     <div class="color-key">
+      <h3>Key</h3>
       <ul>
         <li><span class="belongs_to">Belongs To</span></li>
         <li><span class="has_many">Has Many</span></li>
         <li><span class="has_one">Has One</span></li>
         <li><span class="has_and_belongs_to_many">HABTM</span></li>
+        <li><input type="checkbox" name="links_from" id="links_from" onclick="displayModels()" checked/>Display links from</li>
+        <li><input type="checkbox" name="links_to" id="links_to" onclick="displayModels()" />Display links to</li>
       </ul>
     </div>
-    <ul>
-      <li><%= check_box_tag "ALL", "ALL", false, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
-      <% @models.each do |model| %>
-        <li><%= check_box_tag model[:friendly_name], model[:friendly_name], false, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
-      <% end %>
-    </ul>
+    <div>
+      <h3>Classes</h3>
+      <ul>
+        <li><%= check_box_tag "ALL", "ALL", false, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
+        <% @models.each do |model| %>
+          <li><%= check_box_tag model[:friendly_name], model[:friendly_name], false, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
   <div id="canvas">
     <svg id="model-diagram" width="1000" height="1000" />

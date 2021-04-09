@@ -111,7 +111,23 @@ function connectAssociations() {
 
 function displayedAssociations(models) {
   var modelIds = models.map(model => model.id);
+  selectedAssociations = [];
+  
+  if(displayLinksFrom()) {
+    selectedAssociations = selectedAssociations.concat(associationsLinkedFrom(modelIds));
+  }
+  if(displayLinksTo()) {
+    selectedAssociations = selectedAssociations.concat(associationsLinkedTo(modelIds));
+  }
+  return selectedAssociations;
+}
+
+function associationsLinkedFrom(modelIds) {
   return associations.filter(association => modelIds.includes(association.source));
+}
+
+function associationsLinkedTo(modelIds) {
+  return associations.filter(association => modelIds.includes(association.target));
 }
 
 // For the list of models to display, find all models plus models they have associations to
@@ -135,21 +151,25 @@ function hideExhibits() {
   d3.selectAll("div.detailed-content").classed("hidden", true);
 }
 
-
 function expandModels(coreModels) {
   var coreModelIds = coreModels.map(model => model.id)
-  
   var addedSet = new Set();
   
-  for(var i = 0; i < coreModels.length; ++i) {
-    for(var j = 0; j < coreModels[i].associated_classes.length; ++j) {
-      console.log("Go add: " + coreModels[i].associated_classes[j]);
-      addedSet.add(coreModels[i].associated_classes[j]);
+  if(displayLinksFrom()) {
+    var associations = associationsLinkedFrom(coreModelIds);
+    for(var i = 0; i < associations.length; ++i) {
+      addedSet.add(associations[i].target);
+    }
+  }
+  
+  if(displayLinksTo()) {
+    var associations = associationsLinkedTo(coreModelIds);
+    for(var i = 0; i < associations.length; ++i) {
+      addedSet.add(associations[i].source);
     }
   }
   
   addedSet.forEach(addition => {
-    console.log("Go add to set: " + addition);
     if(!coreModelIds.includes(addition)) {
       var newModel = findModel(addition);
       if(typeof(newModel) !== "undefined")
@@ -158,6 +178,14 @@ function expandModels(coreModels) {
   });
   
   return coreModels;
+}
+
+function displayLinksTo() {
+  return document.getElementById("links_to").checked;
+}
+
+function displayLinksFrom() {
+  return document.getElementById("links_from").checked;
 }
 
 function setAllModels(cb) {

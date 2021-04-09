@@ -35,7 +35,7 @@ module Caravaggio
         friendly_name: friendly_name,
         short_name: short_name,
         columns: @source_model.column_names.sort,
-        associated_classes: associations.map{|association| association[:target]}
+        to_associated_classes: associations.map{|association| association[:target]}
       }
     end
     
