@@ -6,6 +6,10 @@ Update Glaze/Joinery with the deployed Gem
 
 Optionally display links to/from a class
 
+Fix double-arrow when two classes are present selected that have links to each other but only one-way is selected.
+
+Right sidebar scrolling.
+
 
 NICE TO HAVE
 

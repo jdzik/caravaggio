@@ -23,10 +23,14 @@ function displayModels() {
   var selectedModels = displayedModels();
   var associationLinks = displayedAssociations(selectedModels);
   var targetModels = expandModels(selectedModels);
+  var collisionRadius = 200 / associationLinks.length;
+  if(collisionRadius < 8)
+    collisionRadius = 8;
   
   var simulation = d3.forceSimulation()
-    .force("charge", d3.forceManyBody().strength(-20))
+    .force("charge", d3.forceManyBody().strength(-40))
     .force("center", d3.forceCenter().x(500).y(500))
+    .force('collision', d3.forceCollide().radius(collisionRadius))
     .force("centerSelected", isolate(d3.forceCenter().x(500).y(500), function(d) { return d.checked }))
     .force("link", linkForce)
     .nodes(targetModels)
