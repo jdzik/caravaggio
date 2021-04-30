@@ -27,12 +27,19 @@ h2, h3 {
 }
 
 div.sidebar {
-  width: 15%;
   float: left;
   padding: 0px 3px;
   height: 85vh;
   min-height: 85vh;
   overflow-y: scroll;
+}
+
+div.left-sidebar {
+  width: 15%;
+}
+
+div.right-sidebar {
+  width: 20%;
 }
 
 ul {

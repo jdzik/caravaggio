@@ -8,7 +8,7 @@
 </div>
       
 <div id="container">
-  <div class="sidebar">
+  <div class="sidebar left-sidebar">
     <div class="color-key">
       <h3>Key</h3>
       <ul>
@@ -16,8 +16,9 @@
         <li><span class="has_many">Has Many</span></li>
         <li><span class="has_one">Has One</span></li>
         <li><span class="has_and_belongs_to_many">HABTM</span></li>
-        <li><input type="checkbox" name="links_from" id="links_from" onclick="displayModels()" checked/>Display links from</li>
-        <li><input type="checkbox" name="links_to" id="links_to" onclick="displayModels()" />Display links to</li>
+        <li><input type="checkbox" name="links_from" id="links_from" onclick="displayModels()" checked/>Links from</li>
+        <li><input type="checkbox" name="links_to" id="links_to" onclick="displayModels()" />Links to</li>
+        <li><input type="checkbox" name="only_checked" id="only_checked" onclick="displayModels()" />Checked only</li>
       </ul>
     </div>
     <div>
@@ -33,7 +34,7 @@
   <div id="canvas">
     <svg id="model-diagram" width="1000" height="1000" />
   </div>
-  <div id="exhibit" class="sidebar">
+  <div id="exhibit" class="sidebar right-sidebar">
     <div class="detailed-content">
       <h2>Instructions</h2>
       <p>

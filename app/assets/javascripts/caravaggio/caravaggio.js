@@ -21,8 +21,8 @@ function displayModels() {
   // apply forces
   var linkForce = d3.forceLink();
   var selectedModels = displayedModels();
-  var associationLinks = displayedAssociations(selectedModels);
   var targetModels = expandModels(selectedModels);
+  var associationLinks = displayedAssociations(selectedModels, targetModels);
   var collisionRadius = 200 / associationLinks.length;
   if(collisionRadius < 8)
     collisionRadius = 8;
@@ -113,25 +113,46 @@ function connectAssociations() {
   associations = associations.filter(association => !((typeof(association.sourceModel) === 'undefined') || (typeof(association.targetModel) === 'undefined')))
 }
 
-function displayedAssociations(models) {
+function displayedAssociations(models, associatedModels) {
   var modelIds = models.map(model => model.id);
+  var associatedModelIds = associatedModels.map(model => model.id);
+  
   selectedAssociations = [];
   
   if(displayLinksFrom()) {
-    selectedAssociations = selectedAssociations.concat(associationsLinkedFrom(modelIds));
+    selectedAssociations = selectedAssociations.concat(linkedAssociations(modelIds, associatedModelIds));
   }
   if(displayLinksTo()) {
-    selectedAssociations = selectedAssociations.concat(associationsLinkedTo(modelIds));
+    selectedAssociations = selectedAssociations.concat(linkedAssociations(associatedModels, modelIds));
   }
   return selectedAssociations;
 }
 
-function associationsLinkedFrom(modelIds) {
-  return associations.filter(association => modelIds.includes(association.source));
+function linkedAssociations(fromIds, toIds) {
+  var results = associations.filter(association => associationMatches(association, fromIds, toIds))
+  
+  results = results.sort((a1, a2) => {
+    if(a1.association_type > a2.association_type) {
+      return -1;
+    } else if (a2.association_type > a1.association_type) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+  
+  return results;
 }
 
-function associationsLinkedTo(modelIds) {
-  return associations.filter(association => modelIds.includes(association.target));
+function debugResults(label, results) {
+  console.log("RESULTS: " + label);
+  for(var i = 0; i < results.length; ++i) {
+    console.log("   " + results[i].association_type + " " + results[i].source + " -> " + results[i].target);
+  }
+}
+
+function associationMatches(association, fromIds, toIds) {
+  return (!fromIds || fromIds.includes(association.source)) && (!toIds || toIds.includes(association.target));
 }
 
 // For the list of models to display, find all models plus models they have associations to
@@ -156,32 +177,36 @@ function hideExhibits() {
 }
 
 function expandModels(coreModels) {
-  var coreModelIds = coreModels.map(model => model.id)
-  var addedSet = new Set();
+  expandedModels = [...coreModels];
   
-  if(displayLinksFrom()) {
-    var associations = associationsLinkedFrom(coreModelIds);
-    for(var i = 0; i < associations.length; ++i) {
-      addedSet.add(associations[i].target);
+  if(!displayCheckedOnly()) {
+    var coreModelIds = coreModels.map(model => model.id)
+    var addedSet = new Set();
+  
+    if(displayLinksFrom()) {
+      var associations = linkedAssociations(coreModelIds, null);
+      for(var i = 0; i < associations.length; ++i) {
+        addedSet.add(associations[i].target);
+      }
     }
+  
+    if(displayLinksTo()) {
+      var associations = linkedAssociations(null, coreModelIds);
+      for(var i = 0; i < associations.length; ++i) {
+        addedSet.add(associations[i].source);
+      }
+    }
+  
+    addedSet.forEach(addition => {
+      if(!coreModelIds.includes(addition)) {
+        var newModel = findModel(addition);
+        if(typeof(newModel) !== "undefined")
+          expandedModels.push(findModel(addition));
+      }
+    });
   }
-  
-  if(displayLinksTo()) {
-    var associations = associationsLinkedTo(coreModelIds);
-    for(var i = 0; i < associations.length; ++i) {
-      addedSet.add(associations[i].source);
-    }
-  }
-  
-  addedSet.forEach(addition => {
-    if(!coreModelIds.includes(addition)) {
-      var newModel = findModel(addition);
-      if(typeof(newModel) !== "undefined")
-        coreModels.push(findModel(addition));
-    }
-  });
-  
-  return coreModels;
+
+  return expandedModels;
 }
 
 function displayLinksTo() {
@@ -190,6 +215,10 @@ function displayLinksTo() {
 
 function displayLinksFrom() {
   return document.getElementById("links_from").checked;
+}
+
+function displayCheckedOnly() {
+  return document.getElementById("only_checked").checked;
 }
 
 function setAllModels(cb) {

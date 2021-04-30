@@ -4,13 +4,6 @@ Push to a Gem repository
 
 Update Glaze/Joinery with the deployed Gem
 
-Optionally display links to/from a class
-
-Fix double-arrow when two classes are present selected that have links to each other but only one-way is selected.
-
-Right sidebar scrolling.
-
-
 NICE TO HAVE
 
 Drag nodes around and re-calculate
@@ -21,8 +14,6 @@ around and made visible elsewhere.
 Show list of subclasses based on class modules.
 
 Allow expansion of a module full of models.
-
-Style it
 
 Test with something other than Glaze/Joinery
 
