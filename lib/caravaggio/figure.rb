@@ -3,6 +3,9 @@ module Caravaggio
   class Figure
     def initialize(source_model)
       @source_model = source_model
+      
+      # make sure the model works - it won/t for some weird situations involving not loading all gems as expected.
+      model
     end
     
     def name
