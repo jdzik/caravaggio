@@ -1,6 +1,4 @@
-REQUIRED FOR LAUNCH
-
-Push to a Gem repository
+NICE TO HAVE
 
 Update Glaze/Joinery with the deployed Gem
 
@@ -8,16 +6,7 @@ Drag nodes around and re-calculate
 
 Search/filter tool for model name
 
-Bugs: eventually models disappear when playing with links to/from
-  Click link from
-  Unclick link to
-  Re-click link-to
-  Disappears
-
 Make key box fixed location
-
-
-NICE TO HAVE
 
 Allow user to annotate classes, associations, said annotations to be kept 
 around and made visible elsewhere.
