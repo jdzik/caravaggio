@@ -123,7 +123,7 @@ function displayedAssociations(models, associatedModels) {
     selectedAssociations = selectedAssociations.concat(linkedAssociations(modelIds, associatedModelIds));
   }
   if(displayLinksTo()) {
-    selectedAssociations = selectedAssociations.concat(linkedAssociations(associatedModels, modelIds));
+    selectedAssociations = selectedAssociations.concat(linkedAssociations(associatedModelIds, modelIds));
   }
   return selectedAssociations;
 }
