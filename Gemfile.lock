@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    caravaggio (0.0.1)
+    caravaggio (0.0.4)
       jquery-rails
 
 GEM

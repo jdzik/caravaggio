@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Shine light on ActiveRecord entities and relationships."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
-  s.add_runtime_dependency 'jquery-rails'
+  s.add_runtime_dependency 'd3-rails'
 end
