@@ -1,0 +1,1 @@
+Note: I renamed the d3 library and files to caravaggio_d3 to avoid any conflicts with versions of D3 already loaded by the enclosing app.
