@@ -11,4 +11,4 @@
 // about supported directives.
 //
 //= require_directory .
-//= require caravaggio_d3/caravaggio_d3
+//= require caravaggio_d3/caravaggio_d3.min
