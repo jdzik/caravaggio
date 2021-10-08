@@ -110,6 +110,7 @@ function clickCircle(modelId) {
     exhibitFigure(model);
   }
   displayModels();
+  filterModels();
 }
 
 
