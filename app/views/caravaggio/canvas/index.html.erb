@@ -19,14 +19,16 @@
         <li><input type="checkbox" name="links_from" id="links_from" onclick="displayModels()" checked/>Links from</li>
         <li><input type="checkbox" name="links_to" id="links_to" onclick="displayModels()" />Links to</li>
         <li><input type="checkbox" name="only_checked" id="only_checked" onclick="displayModels()" />Checked only</li>
+        <li><br/></li>
+        <li><input type="text" name="class_filter" id="class_filter" oninput="filterModels()" placeholder="Filter" /></li>
       </ul>
     </div>
-    <div>
+    <div class="sidebar-content">
       <h3>Classes</h3>
       <ul>
         <li><%= check_box_tag "ALL", "ALL", false, class: "all-model-checkbox", onclick: "setAllModels(this)" %>ALL</li>
         <% @models.each do |model| %>
-          <li><%= check_box_tag model[:friendly_name], model[:friendly_name], false, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
+          <li class="class-checker" id="class_<%= model[:friendly_name] %>"><%= check_box_tag model[:friendly_name], model[:friendly_name], false, data: {class_name: model[:id]}, class: "model-checkbox", onclick: "setModel(this)" %> <%= model[:short_name] %></li>
         <% end %>
       </ul>
     </div>

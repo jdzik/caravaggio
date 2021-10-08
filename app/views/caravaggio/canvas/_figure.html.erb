@@ -6,7 +6,7 @@
       <li><%= column.name %> : <%= column.sql_type %></li>
     <% end %>
   </ul>
-  <h3>Associations</h3>
+  <h3>Associations From</h3>
   <ul>
     <% figure.associations.each do |association| %>
       <li>
@@ -20,5 +20,21 @@
         <% end %>
       </li>
     <% end %>
+  </ul>
+  <ul>
+    <h3>Associations To</h3>
+    <ul>
+      <% @canvas.associations_for(target: figure.name).each do |association| %>
+        <li>
+          <%= association[:source] %> : <%= association[:association_type] %> <%= association[:name] %>
+          <% if association[:options].present? %>
+            <ul>
+              <% association[:options].each do |option, value| %>
+                <li><%= option %> : <%= value %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </li>
+      <% end %>
   </ul>
 </div>

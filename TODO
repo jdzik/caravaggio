@@ -4,10 +4,6 @@ Update Glaze/Joinery with the deployed Gem
 
 Drag nodes around and re-calculate
 
-Search/filter tool for model name
-
-Make key box fixed location
-
 Allow user to annotate classes, associations, said annotations to be kept 
 around and made visible elsewhere.
 
@@ -19,5 +15,4 @@ Write tests
 
 Figure out what to do with polymorphic associations
 
-Take it public
 

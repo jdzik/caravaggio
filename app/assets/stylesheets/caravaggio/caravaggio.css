@@ -31,15 +31,23 @@ div.sidebar {
   padding: 0px 3px;
   height: 85vh;
   min-height: 85vh;
-  overflow-y: scroll;
 }
 
 div.left-sidebar {
   width: 15%;
 }
 
+div.left-sidebar .sidebar-content {
+  overflow-y: scroll;
+  height: 65vh;
+  min-height: 65vh;
+}
+
 div.right-sidebar {
   width: 18%;
+  overflow-y: scroll;
+  height: 85vh;
+  min-height: 85vh;
 }
 
 ul {

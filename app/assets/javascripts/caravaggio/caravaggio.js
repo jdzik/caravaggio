@@ -62,6 +62,25 @@ function displayModels() {
     .text(d => d["short_name"])
 }
 
+function filterModels() {
+  filterValue = d3.select("#class_filter").property("value");
+  if(filterValue === "") {
+    d3.selectAll(".class-checker").classed("hidden", false);  
+  } else {
+    for(i = 0; i < models.length; ++i) {
+      if(models[i].checked || models[i].id.indexOf(filterValue) != -1) {
+        d3.selectAll(checkboxClassName(models[i])).classed("hidden", false);
+      } else {
+        d3.selectAll(checkboxClassName(models[i])).classed("hidden", true);
+      }
+    }
+  }
+}
+
+function checkboxClassName(model) {
+  return "#class_" + model.friendly_name;
+}
+
 function createMarker(defs, name, color) {
   return defs.append("marker")
     .attr('id', name + '-arrowhead')
@@ -230,6 +249,7 @@ function setAllModels(cb) {
   setAllModelChecked(checked);
   
   displayModels();
+  filterModels();
 }
 
 function setModel(cb) {
@@ -241,6 +261,7 @@ function setModel(cb) {
   }
 
   displayModels();
+  filterModels();
 }
 
 function findModel(id) {

@@ -32,6 +32,11 @@ module Caravaggio
       @to_json ||= to_h.to_json
     end
     
+    # identify HABTM models
+    def habtm?
+      !@source_model.attribute_names.include?("id") && @source_model.name[0..5] == "HABTM_"
+    end
+    
     def model
       @source_model_hash ||= {
         id: name,
