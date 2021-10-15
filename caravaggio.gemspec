@@ -9,7 +9,11 @@ Gem::Specification.new do |s|
   s.version     = Caravaggio::VERSION
   s.authors     = ["jdzik"]
   s.email       = ["joe.dzikiewicz@framebridge.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/jdzik/caravaggio"
+  s.metadata    = {
+    "homepage_uri"      => "https://github.com/jdzik/caravaggio",
+    "source_code_uri"   => "https://github.com/jdzik/caravaggio"
+  }
   s.summary     = "Shine light on ActiveRecord entities and relationships."
   s.description = "Shine light on ActiveRecord entities and relationships."
   s.license     = "MIT"
